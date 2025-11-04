@@ -8,35 +8,49 @@ class MinStack {
 private:
     // TODO: Add your data members here
     // Hint: You might need two stacks or a modified node structure
+    stack<int> st;    
+    stack<int> minSt; 
 
 public:
-    MinStack() {
-        // TODO: Initialize your data structures
+    MinStack() : st(), minSt() {
+        // TODO: Initialize your data structures        
     }
     
     void push(int val) {
         // TODO: Implement push operation
         // Remember to maintain the minimum!
+        st.push(val);
+        if (minSt.empty() || val <= minSt.top()) {
+            minSt.push(val);
+        } else {
+            minSt.push(minSt.top());
+        }
     }
     
     void pop() {
         // TODO: Implement pop operation
         // Don't forget to update the minimum if needed
+        if (st.empty()) {
+            throw runtime_error("Stack is empty");
+        }
+        st.pop();
+        minSt.pop();
     }
     
     int top() {
         // TODO: Return the top element
-        return -1;
+        if (st.empty()) {
+            throw runtime_error("Stack is empty");
+        }
+        return st.top();
     }
     
     int getMin() {
         // TODO: Return the minimum element in O(1) time
-        return INT_MIN;
-    }
-    
-    bool isEmpty() {
-        // TODO: Check if stack is empty
-        return true;
+        if (minSt.empty()) {
+            throw runtime_error("Stack is empty");
+        }
+        return minSt.top();
     }
 };
 
