@@ -4,14 +4,32 @@
 using namespace std;
 
 string compressString(const string& str) {
-    // TODO: Implement string compression
+    // TODO: Implement string compression   
     // Algorithm:
-    // 1. Track current character and its count
-    // 2. When character changes, append "char + count" to result
-    // 3. Don't forget the last character group!
-    // 4. Compare lengths and return the shorter string
+    if (str.empty()) return str;
     
-    return str;  // Placeholder
+    string compressed = "";
+    int count = 1;
+    // 1. Track current character and its count
+    for (int i = 1; i < str.length(); i++) {
+        if (str[i] == str[i - 1]) {
+            count++;
+        } else {
+            // 2. When character changes, append "char + count" to result
+            compressed += str[i - 1];
+            compressed += to_string(count);
+            count = 1; 
+        }
+    }
+    // 3. Don't forget the last character group!
+    compressed += str.back();
+    compressed += to_string(count);
+    // 4. Compare lengths and return the shorter string
+    if (compressed.length() < str.length()) {
+        return compressed;
+    } else {
+        return str;
+    }
 }
 
 int main() {
