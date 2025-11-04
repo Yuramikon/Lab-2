@@ -7,13 +7,31 @@ using namespace std;
 string removeDuplicates(const string& s) {
     // TODO: Implement remove adjacent duplicates algorithm
     // Use a stack to efficiently remove adjacent duplicate characters
+    stack<char> st;
+    stack<char> st2;
     // Algorithm:
     // 1. Iterate through each character in the string
-    // 2. If stack is empty or top != current char, push current char
+    for (char ch : s) {
+        // 2. If stack is empty or top != current char, push current char
+        if (!st.empty() && st.top() == ch) {
+            st.pop();
+        } else {
+            st.push(ch);
+        }
+    }
     // 3. If top == current char, pop (they cancel out)
     // 4. Build result string from stack contents
+    while (!st.empty()) {
+            st2.push(st.top());
+            st.pop();
+        }
+    string result;
+    while (!st2.empty()) {
+        result += st2.top();
+        st2.pop();
+    }
     
-    return "";  // Placeholder
+    return result; 
 }
 
 int main() {
