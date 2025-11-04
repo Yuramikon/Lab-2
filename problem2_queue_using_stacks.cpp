@@ -12,33 +12,53 @@ private:
     void transfer() {
         // TODO: Transfer all elements from stack1 to stack2
         // This reverses the order, giving us FIFO behavior
+        while (!stack1.empty()) {
+            stack2.push(stack1.top());
+            stack1.pop();
+        }
     }
 
 public:
-    QueueUsingStacks() {
+    QueueUsingStacks() : stack1(), stack2() {
         // Constructor - stacks are automatically initialized
     }
     
     void enqueue(int value) {
         // TODO: Add element to queue
         // Hint: Which stack should you push to?
+        stack1.push(value);
     }
     
     int dequeue() {
         // TODO: Remove and return front element
         // Hint: When should you call transfer()?
-        return -1;
+        if (isEmpty())
+            throw runtime_error("Queue is empty!");
+
+        // If stack2 is empty, move elements from stack1
+        if (stack2.empty())
+            transfer();
+
+        int frontVal = stack2.top();
+        stack2.pop();
+        return frontVal;
     }
     
     int front() {
         // TODO: Return front element without removing it
-        return -1;
+        if (isEmpty())
+            throw runtime_error("Queue is empty!");
+
+        if (stack2.empty())
+            transfer();
+
+        return stack2.top();
     }
     
     bool isEmpty() {
         // TODO: Check if queue is empty
         // Hint: Both stacks must be empty
-        return true;
+        return stack1.empty() && stack2.empty();
     }
 };
 
